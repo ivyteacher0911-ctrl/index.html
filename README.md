@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Date with me?</title>
+<title>Date With Me ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 
@@ -16,36 +16,53 @@
 
 body{
     height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffd6e7,#ffeef5,#fff5f8);
-    overflow:hidden;
+    background:linear-gradient(135deg,#ffe0ec,#fff5f8,#ffd6e7);
     font-family:'Quicksand',sans-serif;
 }
 
 .card{
-    background:rgba(255,255,255,0.95);
-    padding:50px;
-    border-radius:35px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.15);
-    text-align:center;
     width:700px;
+    background:white;
+    border-radius:35px;
+    padding:50px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    border:5px solid #ffd3e1;
     position:relative;
-    border:5px solid #ffd1dc;
+}
+
+#cat{
+    width:240px;
+    margin-bottom:25px;
+    animation:floatCat 2s infinite ease-in-out;
+}
+
+@keyframes floatCat{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+    100%{
+        transform:translateY(0);
+    }
 }
 
 h1{
     font-family:'Pacifico',cursive;
-    color:#ff5c8a;
+    color:#ff6699;
     font-size:40px;
     min-height:120px;
+    line-height:1.5;
 }
 
 .buttons{
-    margin-top:40px;
-    position:relative;
-    height:120px;
+    margin-top:30px;
 }
 
 button{
@@ -54,13 +71,13 @@ button{
     font-size:24px;
     border-radius:50px;
     cursor:pointer;
-    transition:0.3s;
     font-family:'Quicksand',sans-serif;
     font-weight:bold;
+    transition:.2s;
 }
 
 #yes{
-    background:#ff7aa2;
+    background:#ff6f9f;
     color:white;
     margin-right:25px;
 }
@@ -70,28 +87,26 @@ button{
 }
 
 #no{
-    background:#d8d8d8;
-    color:#555;
-    position:absolute;
+    background:#ececec;
+    color:#666;
+    position:fixed;
 }
 
 .hearts{
-    position:absolute;
+    position:fixed;
     width:100%;
     height:100%;
-    pointer-events:none;
-    overflow:hidden;
     left:0;
     top:0;
+    pointer-events:none;
 }
 
 .heart{
     position:absolute;
-    color:#ff8fb1;
-    animation:float 5s linear infinite;
+    animation:fly 5s linear forwards;
 }
 
-@keyframes float{
+@keyframes fly{
     from{
         transform:translateY(0);
         opacity:1;
@@ -107,92 +122,115 @@ button{
 <body>
 
 <div class="card">
+
+    <img src="image(53).png" id="cat">
+
     <h1 id="text"></h1>
 
-    <div class="buttons">
+    <div class="buttons" id="buttons" style="display:none;">
         <button id="yes">💖 Yes 💖</button>
         <button id="no">🙈 No</button>
     </div>
+
 </div>
 
 <div class="hearts" id="hearts"></div>
 
 <script>
-// Hiệu ứng gõ chữ
+
 const message = "Bạn có muốn đi hẹn hò với em không? 💕";
 let i = 0;
 
+setTimeout(()=>{
+    typeWriter();
+},1500);
+
 function typeWriter(){
+
     if(i < message.length){
         document.getElementById("text").innerHTML += message.charAt(i);
         i++;
-        setTimeout(typeWriter, 90);
+        setTimeout(typeWriter,90);
+    }
+    else{
+        document.getElementById("buttons").style.display="block";
     }
 }
-typeWriter();
 
-
-// Nút No chạy trốn
 const noBtn = document.getElementById("no");
 
-document.addEventListener("mousemove", function(e){
-
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+document.addEventListener("mousemove",function(e){
 
     const rect = noBtn.getBoundingClientRect();
 
+    const x = rect.left + rect.width/2;
+    const y = rect.top + rect.height/2;
+
     const distance = Math.sqrt(
-        (mouseX - (rect.left + rect.width/2))**2 +
-        (mouseY - (rect.top + rect.height/2))**2
+        (e.clientX-x)*(e.clientX-x) +
+        (e.clientY-y)*(e.clientY-y)
     );
 
-    if(distance < 120){
+    if(distance < 180){
 
-        const maxX = window.innerWidth - rect.width - 20;
-        const maxY = window.innerHeight - rect.height - 20;
+        noBtn.style.transform="scale(0.5)";
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
+        let newX = e.clientX + 35;
+        let newY = e.clientY + 20;
 
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
+        if(newX > window.innerWidth-100){
+            newX = e.clientX - 120;
+        }
+
+        if(newY > window.innerHeight-50){
+            newY = e.clientY - 50;
+        }
+
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
     }
 });
 
-
-// Khi nhấn Yes
 document.getElementById("yes").onclick = function(){
 
-    document.querySelector(".card").innerHTML =
-    `
-    <h1 style="
-        color:#ff5c8a;
-        font-size:42px;
-        font-family:Pacifico;
-    ">
-        Yaaay! 💕<br>
-        Em biết mà! 💖
-    </h1>
+    document.querySelector(".card").innerHTML = `
+        <img src="image(53).png" width="250">
+
+        <h1 style="
+            color:#ff6699;
+            margin-top:25px;
+            font-family:Pacifico;
+        ">
+            Yaaay!!! 💖<br>
+            Em biết mà 🥰💕
+        </h1>
     `;
-};
 
+    createHearts();
+}
 
-// Tim bay
-setInterval(()=>{
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💗";
-    heart.style.left = Math.random()*100+"%";
-    heart.style.fontSize = (20 + Math.random()*30)+"px";
+function createHearts(){
 
-    document.getElementById("hearts").appendChild(heart);
+    setInterval(()=>{
 
-    setTimeout(()=>{
-        heart.remove();
-    },5000);
+        const heart = document.createElement("div");
 
-},400);
+        heart.className="heart";
+        heart.innerHTML="💖";
+
+        heart.style.left=Math.random()*100+"%";
+        heart.style.bottom="-30px";
+        heart.style.fontSize=(20+Math.random()*30)+"px";
+
+        document.getElementById("hearts").appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },5000);
+
+    },250);
+}
+
 </script>
 
 </body>
