@@ -3,107 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Date With Me ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+
+<title>Đi hẹn hò hok mom?</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
 body{
+    margin:0;
     height:100vh;
-    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
     background:linear-gradient(135deg,#ffe0ec,#fff5f8,#ffd6e7);
-    font-family:'Quicksand',sans-serif;
+    overflow:hidden;
+    font-family:'Baloo 2',cursive;
 }
 
 .card{
-    width:700px;
-    background:white;
-    border-radius:35px;
-    padding:50px;
     text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.15);
-    border:5px solid #ffd3e1;
-    position:relative;
 }
 
 #cat{
-    width:240px;
-    margin-bottom:25px;
-    animation:floatCat 2s infinite ease-in-out;
+    width:260px;
+    animation:float 2s infinite ease-in-out;
 }
 
-@keyframes floatCat{
-    0%{
-        transform:translateY(0);
-    }
+@keyframes float{
     50%{
-        transform:translateY(-10px);
+        transform:translateY(-12px);
     }
-    100%{
-        transform:translateY(0);
+}
+
+#start{
+    margin-top:20px;
+    font-size:28px;
+    color:#ff5d95;
+    cursor:pointer;
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:.5;
     }
 }
 
 h1{
-    font-family:'Pacifico',cursive;
-    color:#ff6699;
-    font-size:40px;
-    min-height:120px;
-    line-height:1.5;
+    color:#ff5d95;
+    font-family:'Pacifico';
+    font-size:50px;
+    min-height:100px;
 }
 
 .buttons{
-    margin-top:30px;
+    margin-top:20px;
 }
 
 button{
     border:none;
-    padding:18px 45px;
-    font-size:24px;
     border-radius:50px;
+    padding:18px 45px;
+    font-size:30px;
     cursor:pointer;
-    font-family:'Quicksand',sans-serif;
-    font-weight:bold;
+    font-family:'Baloo 2';
     transition:.2s;
 }
 
 #yes{
-    background:#ff6f9f;
+    background:#ff77a8;
     color:white;
-    margin-right:25px;
-}
-
-#yes:hover{
-    transform:scale(1.1);
 }
 
 #no{
-    background:#ececec;
+    background:#eeeeee;
     color:#666;
     position:fixed;
 }
 
 .hearts{
     position:fixed;
-    width:100%;
-    height:100%;
-    left:0;
-    top:0;
+    inset:0;
     pointer-events:none;
 }
 
 .heart{
     position:absolute;
-    animation:fly 5s linear forwards;
+    animation:fly 4s linear forwards;
 }
 
 @keyframes fly{
@@ -116,6 +103,7 @@ button{
         opacity:0;
     }
 }
+
 </style>
 </head>
 
@@ -123,13 +111,17 @@ button{
 
 <div class="card">
 
-    <img src="image(53).png" id="cat">
+    <img src="cat.png" id="cat">
+
+    <div id="start">
+        ✨ Click vào đây để khám phá option nhé sốp! ✨
+    </div>
 
     <h1 id="text"></h1>
 
     <div class="buttons" id="buttons" style="display:none;">
-        <button id="yes">💖 Yes 💖</button>
-        <button id="no">🙈 No</button>
+        <button id="yes">💗 Kó</button>
+        <button id="no">🙈 Hok</button>
     </div>
 
 </div>
@@ -138,98 +130,122 @@ button{
 
 <script>
 
-const message = "Bạn có muốn đi hẹn hò với em không? 💕";
-let i = 0;
+const message = "💕 Đi hẹn hò hok mom? 💕";
 
-setTimeout(()=>{
-    typeWriter();
-},1500);
+document.getElementById("start").onclick=function(){
 
-function typeWriter(){
+    this.style.display="none";
 
-    if(i < message.length){
-        document.getElementById("text").innerHTML += message.charAt(i);
-        i++;
-        setTimeout(typeWriter,90);
+    let i=0;
+
+    function type(){
+
+        if(i<message.length){
+            document.getElementById("text").innerHTML+=message.charAt(i);
+            i++;
+            setTimeout(type,100);
+        }
+        else{
+            document.getElementById("buttons").style.display="block";
+        }
     }
-    else{
-        document.getElementById("buttons").style.display="block";
-    }
-}
 
-const noBtn = document.getElementById("no");
+    type();
+};
+
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+
+let scale=1;
 
 document.addEventListener("mousemove",function(e){
 
-    const rect = noBtn.getBoundingClientRect();
+    const rect=noBtn.getBoundingClientRect();
 
-    const x = rect.left + rect.width/2;
-    const y = rect.top + rect.height/2;
+    const x=rect.left+rect.width/2;
+    const y=rect.top+rect.height/2;
 
-    const distance = Math.sqrt(
-        (e.clientX-x)*(e.clientX-x) +
-        (e.clientY-y)*(e.clientY-y)
+    const distance=Math.sqrt(
+        (e.clientX-x)**2+
+        (e.clientY-y)**2
     );
 
-    if(distance < 180){
+    if(distance<170){
 
-        noBtn.style.transform="scale(0.5)";
+        let newX=e.clientX+50;
+        let newY=e.clientY+20;
 
-        let newX = e.clientX + 35;
-        let newY = e.clientY + 20;
-
-        if(newX > window.innerWidth-100){
-            newX = e.clientX - 120;
+        if(newX>window.innerWidth-100){
+            newX=e.clientX-130;
         }
 
-        if(newY > window.innerHeight-50){
-            newY = e.clientY - 50;
+        if(newY>window.innerHeight-50){
+            newY=e.clientY-50;
         }
 
-        noBtn.style.left = newX + "px";
-        noBtn.style.top = newY + "px";
+        noBtn.style.left=newX+"px";
+        noBtn.style.top=newY+"px";
+
+        scale-=0.05;
+
+        if(scale<0.3){
+            scale=0.3;
+        }
+
+        noBtn.style.transform=
+            `scale(${scale})`;
+
+        let yesScale=
+            Number(
+                yesBtn.dataset.scale || 1
+            );
+
+        yesScale+=0.05;
+
+        yesBtn.dataset.scale=yesScale;
+
+        yesBtn.style.transform=
+            `scale(${yesScale})`;
     }
 });
 
-document.getElementById("yes").onclick = function(){
+yesBtn.onclick=function(){
 
-    document.querySelector(".card").innerHTML = `
-        <img src="image(53).png" width="250">
+    document.querySelector(".card").innerHTML=`
 
-        <h1 style="
-            color:#ff6699;
-            margin-top:25px;
-            font-family:Pacifico;
-        ">
-            Yaaay!!! 💖<br>
-            Em biết mà 🥰💕
+        <img src="cat.png" width="280">
+
+        <h1>
+        Yaaaayyy 🥺💗<br>
+        Em biết mom sẽ chọn Kó màaaa!!!
         </h1>
+
     `;
-
-    createHearts();
-}
-
-function createHearts(){
 
     setInterval(()=>{
 
-        const heart = document.createElement("div");
+        const heart=document.createElement("div");
 
         heart.className="heart";
-        heart.innerHTML="💖";
+        heart.innerHTML="💗";
 
-        heart.style.left=Math.random()*100+"%";
+        heart.style.left=
+            Math.random()*100+"%";
+
         heart.style.bottom="-30px";
-        heart.style.fontSize=(20+Math.random()*30)+"px";
 
-        document.getElementById("hearts").appendChild(heart);
+        heart.style.fontSize=
+            (20+Math.random()*30)+"px";
+
+        document.getElementById("hearts")
+            .appendChild(heart);
 
         setTimeout(()=>{
             heart.remove();
-        },5000);
+        },4000);
 
     },250);
-}
+};
 
 </script>
 
