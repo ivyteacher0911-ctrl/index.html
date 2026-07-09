@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Đi hẹn hò hok mom?</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -20,9 +19,9 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffe4ef,#fff4f8,#ffd8e8);
     overflow:hidden;
-    font-family:'Baloo 2',cursive;
+    background:linear-gradient(135deg,#ffe4ef,#fff4f8,#ffd8e8);
+    font-family:'Nunito',sans-serif;
 }
 
 .card{
@@ -44,8 +43,10 @@ body{
 
 #start{
     margin-top:20px;
-    color:#ff6b9d;
-    font-size:30px;
+    color:#ff5f95;
+    font-size:28px;
+    font-family:'Baloo 2',cursive;
+    line-height:1.5;
     cursor:pointer;
     animation:blink 1s infinite;
 }
@@ -58,11 +59,11 @@ body{
 
 h1{
     margin-top:30px;
-    color:#ff6b9d;
-    font-family:'Pacifico',cursive;
-    font-size:48px;
-    min-height:120px;
+    color:#ff5f95;
+    font-size:42px;
+    font-family:'Baloo 2',cursive;
     line-height:1.5;
+    min-height:120px;
 }
 
 .buttons{
@@ -73,9 +74,10 @@ button{
     border:none;
     border-radius:50px;
     padding:18px 45px;
-    font-size:30px;
-    cursor:pointer;
+    font-size:28px;
     font-family:'Baloo 2',cursive;
+    font-weight:700;
+    cursor:pointer;
     transition:0.2s;
 }
 
@@ -85,7 +87,7 @@ button{
 }
 
 #no{
-    background:#ececec;
+    background:#eeeeee;
     color:#666;
     position:fixed;
 }
@@ -118,7 +120,7 @@ button{
 
 <div class="card">
 
-    <img src="anhconmeo.jpg" id="cat">
+    <img src="conmeo1.jpg" id="cat">
 
     <div id="start">
         ✨ Click vào đây để khám phá option nhé sốp! ✨
@@ -168,6 +170,13 @@ let yesScale = 1;
 
 document.addEventListener("mousemove",function(e){
 
+    if(
+        document.getElementById("buttons").style.display
+        !== "block"
+    ){
+        return;
+    }
+
     const rect = noBtn.getBoundingClientRect();
 
     const x = rect.left + rect.width/2;
@@ -213,7 +222,8 @@ document.addEventListener("mousemove",function(e){
 yesBtn.onclick = function(){
 
     document.querySelector(".card").innerHTML = `
-        <img src="anhconmeo.jpg" width="280">
+        <img src="anhconmeo.jpg"
+             style="width:280px;">
 
         <h1>
             Yaaayyy 🥺💗<br>
